@@ -15,7 +15,7 @@ def dowload_blobs_in_bucket(bucket_name):
     blobs = bucket.list_blobs()
 
     for blob in blobs:
-        download_blob(bucket_name, blob, blob)
+        download_blob(bucket_name, blob.name, blob.name)
 
 if __name__ == "__main__":
     # Download GCS Blop files locally
