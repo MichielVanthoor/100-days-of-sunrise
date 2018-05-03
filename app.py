@@ -6,7 +6,7 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
-    blob.download_to_filename(destination_file_name)
+    blob.download_to_filename('staging/'+destination_file_name)
 
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the bucket."""
@@ -23,7 +23,7 @@ def dowload_blobs_in_bucket(bucket_name):
     blobs = bucket.list_blobs()
 
     for blob in blobs:
-        download_blob(bucket_name, blob.name, '/staging/'+bucket_name+'/'+blob.name)
+        download_blob(bucket_name, blob.name, blob.name)
 
 if __name__ == "__main__":
     bucket = '20180503sr'
