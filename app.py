@@ -1,5 +1,5 @@
 # Imports the Google Cloud client library
-from google.cloud.storage import Blob
+from google.cloud import storage
 
 # Download GCS Blop files locally
 storage_client = storage.Client()
