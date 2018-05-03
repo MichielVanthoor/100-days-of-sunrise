@@ -2,10 +2,10 @@
 from google.cloud import storage
 
 # Download GCS Blop files locally
-storage_client = storage.Client()
+client = storage.Client()
 bucket = client.get_bucket('100-days-of-sunrise')
 blob = Blob('G0023157.JPG', bucket)
-with open('/staging', 'wb') as file_obj:
+with open('/staging/1', 'wb') as file_obj:
     blob.download_to_file(file_obj)
 
 # Creates the new bucket
