@@ -23,7 +23,7 @@ def dowload_blobs_in_bucket(bucket_name):
     blobs = bucket.list_blobs()
 
     for blob in blobs:
-        download_blob(bucket_name, blob.name, 'staging/'+blob.name)
+        download_blob(bucket_name, blob.name, '/staging/'+bucket_name+'/'+blob.name)
 
 if __name__ == "__main__":
     bucket = '20180503sr'
