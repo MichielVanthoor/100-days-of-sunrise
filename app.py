@@ -16,10 +16,6 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
 
     blob.upload_from_filename(source_file_name)
 
-    print('File {} uploaded to {}.'.format(
-        source_file_name,
-        destination_blob_name))
-
 def dowload_blobs_in_bucket(bucket_name):
     """Download all the blobs in the bucket."""
     storage_client = storage.Client()
@@ -27,7 +23,7 @@ def dowload_blobs_in_bucket(bucket_name):
     blobs = bucket.list_blobs()
 
     for blob in blobs:
-        download_blob(bucket_name, blob.name, 'staging/'+bucket_name+'/'+blob.name)
+        download_blob(bucket_name, blob.name, 'staging/'+blob.name)
 
 if __name__ == "__main__":
     bucket = '20180503sr'
@@ -42,11 +38,3 @@ if __name__ == "__main__":
 
     # Upload the timelaps video to GCS
     upload_blob(bucket,'staging/'+bucket_name+'/'+video_name,video_name)
-
-
-# Creates the new bucket
-#storage_client = storage.Client()
-#bucket_name = '100-days-of-sunrise'
-#bucket = storage_client.create_bucket(bucket_name)
-#print('Bucket {} created.'.format(bucket.name))
-
