@@ -37,4 +37,4 @@ if __name__ == "__main__":
     os.system(timelapse_command)
 
     # Upload the timelaps video to GCS
-    upload_blob(bucket,'staging/'+bucket_name+'/'+video_name,video_name)
+    upload_blob(bucket,'staging/'+video_name,video_name)
