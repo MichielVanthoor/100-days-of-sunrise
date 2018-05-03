@@ -5,7 +5,7 @@ from google.cloud import storage
 client = storage.Client()
 bucket = client.get_bucket('20180503sr')
 blob = storage.Blob('G0023157.JPG', bucket)
-with open('/staging/1', 'wb') as file_obj:
+with open('staging/1', 'wb') as file_obj:
     blob.download_to_file(file_obj)
 
 # Creates the new bucket
