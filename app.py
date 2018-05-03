@@ -34,6 +34,7 @@ if __name__ == "__main__":
     # Create the timelapse
     video_name = 'sunrise.mp4'
     timelapse_command = 'ffmpeg -r 15 -start_number 23157 -i G00%d.JPG -s 1280x720 -vcodec libx264 '+video_name
+    os.system('cd staging')
     os.system(timelapse_command)
 
     # Upload the timelaps video to GCS
