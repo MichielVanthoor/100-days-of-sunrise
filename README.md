@@ -13,6 +13,3 @@
   * Install [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)(`sudo apt-get install python-bs4`)
 * Clone this repo to your Raspberry Pi (`git clone https://github.com/MichielVanthoor/100-days-of-sunrise`)
 * Run the ingestion application (`python 100-days-of-sunrise/ingestion/ingestion.py`)
-
-## Credits
-[goprowifihack](https://github.com/KonradIT/goprowifihack)
