@@ -2,7 +2,7 @@ import urllib2
 import schedule
 import time
 import json
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from google.cloud import storage
 
 
@@ -57,7 +57,7 @@ def create_timelapse():
     #switch_to_SSID('goprohotspot') 
     #upload_to_gcs('date_sunrise.mp4')   
 
-def schedule_start_time()
+def schedule_start_time():
     # Get sunrise through API
     sunrise_api = 'https://api.sunrise-sunset.org/json?lat=52.377956&lng=4.897070&date=today'
     response = urllib2.urlopen(sunrise_api)
@@ -71,7 +71,7 @@ def schedule_start_time()
     offset_minutes = 15
     #TODO
     #start_time = sunrise_time - offset_minutes*60
-    start_time_string = time.strftime(start_time; '%I:%M')
+    start_time_string = time.strftime(start_time, '%I:%M')
 
 
     schedule.every().day.at(start_time_string).do(create_timelapse)
