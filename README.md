@@ -10,6 +10,6 @@
   * Install git (`sudo apt-get install git`)
   * Install pip (`sudo apt-get install python-pip`)
   * Install [schedule](https://github.com/dbader/schedule) (`pip install schedule`)
-  * Install [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)(`sudo apt-get install python-bs4`)
+  * Install [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)(`pip install beautifulsoup4`)
 * Clone this repo to your Raspberry Pi (`git clone https://github.com/MichielVanthoor/100-days-of-sunrise`)
 * Run the ingestion application (`python 100-days-of-sunrise/ingestion/ingestion.py`)
