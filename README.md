@@ -1,5 +1,7 @@
 # 100-days-of-sunrise
 
+## Configuring Google Cloud Platform bucket
+
 ## Configuring Raspberry Pi to schedule and ingest GoPro footage
 * Boot Raspberry Pi with Raspbian Strech Lite
 * Connect to (internet-enabled) WiFi using [these instructions](https://www.raspberrypi.org/forums/viewtopic.php?t=191252)
