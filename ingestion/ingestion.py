@@ -1,6 +1,10 @@
 import urllib2
-from time import sleep
+import schedule
+import time
+import json
 from BeautifulSoup import BeautifulSoup
+from google.cloud import storage
+
 
 def switch_to_SSID(ssid):
     return
@@ -10,10 +14,10 @@ def start_timelapse():
     urllib2.urlopen('http://10.5.5.9/gp/gpControl/command/sub_mode?mode=0&sub_mode=1')
 
     # Start the time lapse recording
-    sleep(5)
+    time.sleep(5)
     # Set interval fime
     urllib2.urlopen('http://10.5.5.9/gp/gpControl/setting/5/6')
-    sleep(1)
+    time.sleep(1)
     urllib2.urlopen('http://10.5.5.9/gp/gpControl/command/shutter?p=1')
 
 def stop_timelapse():
@@ -37,16 +41,48 @@ def dowload_latest_file(filename):
       code.write(data)
 
 def upload_to_gcs(filename):
-    return
+    client = storage.Client()
+    bucket = client.get_bucket('100-days-of-sunrise')
+    blob = bucket.blob(filename)
+    blob.upload_from_filename(filename='/local/path.txt')
 
-if __name__ == "__main__":
-    # Make sure to be connected to right Wifi!
-
+def create_timelapse():
+    # TODO
     #switch_to_SSID('goprohotspot') 
     start_timelapse()
-    sleep(10)
+    time.sleep(120*60)#run for 2 hours
     stop_timelapse()
-    sleep(5)
+    time.sleep(5)
     dowload_latest_file('date_sunrise.mp4')
     #switch_to_SSID('goprohotspot') 
+    #upload_to_gcs('date_sunrise.mp4')   
+
+def schedule_start_time()
+    # Get sunrise through API
+    sunrise_api = 'https://api.sunrise-sunset.org/json?lat=52.377956&lng=4.897070&date=today'
+    response = urllib2.urlopen(sunrise_api)
+    data = json.load(response) 
+    sunrise_time_string = data['results']['sunrise']
+    
+    # Convert to time format to do math
+    sunrise_time = time.strptime(sunrise_time_string, '%I:%M:%S %p') 
+
+    # Calculate start time & convert to string
+    offset_minutes = 15
+    #TODO
+    #start_time = sunrise_time - offset_minutes*60
+    start_time_string = time.strftime(start_time; '%I:%M')
+
+
+    schedule.every().day.at(start_time_string).do(create_timelapse)
+
+if __name__ == "__main__":
+    # Do everything in UTC time!
+    # Schedule and run job
+    schedule.every(1).day.at("00:05").do(schedule_start_time)
+    while 1:
+        schedule.run_pending()
+        time.sleep(1)
+
+
 
