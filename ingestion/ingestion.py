@@ -1,5 +1,6 @@
-import urllib2, re
+import urllib2
 from time import sleep
+from BeautifulSoup import BeautifulSoup
 
 def switch_to_SSID(ssid):
     return
@@ -23,13 +24,10 @@ def dowload_latest_file(filename):
     # Get URL of latest video
     video_server_url = 'http://10.5.5.9:8080/videos/DCIM/100GOPRO/'
     response = urllib2.urlopen(video_server_url)
-    html = response.read()
+    soup = BeautifulSoup(response)
 
-    pattern = re.compile("^.*\.MP4$")
-    pattern.match(string)
-
-
-    video_name = 'GOPR3368.MP4'
+    # TODO
+    video_name = soup.title.string
     url = video_server_url+video_name
 
     # Save file in local directory
