@@ -11,7 +11,7 @@
   * Enter your gopro wifi password`sudo nano gopro`
   * Copy to the wpa_supplicant directory (`sudo cp gopro /etc/wpa_supplicant/`)
   * Enter you internetenabled WiFi `sudo nano internet`
-  * Copy to the wpa_supplicant directory (`sudo cp gopro /etc/wpa_supplicant/`)
+  * Copy to the wpa_supplicant directory (`sudo cp internet /etc/wpa_supplicant/`)
   * Give executing rights to switchwifi script (`chmod +x switchwifi`)
 * Install dependencies
   * `sudo apt-get update`
