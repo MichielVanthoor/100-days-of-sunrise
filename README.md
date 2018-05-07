@@ -5,8 +5,12 @@
 ## Configuring Raspberry Pi to schedule and ingest GoPro footage
 * Boot Raspberry Pi with Raspbian Strech Lite
 * Set the timezone to UTC 
-* Insert your network parameters in the 'ingestion/config/.' -files
-* Copy these files to the right location `sudo cp gopro /etc/wpa_supplicant/` & `sudo cp internet /etc/wpa_supplicant/`
+* Insert your network parameters Wifi config files
+  * Enter your gopro wifi password`sudo nano gopro`
+  * Copy to the wpa_supplicant directory (`sudo cp gopro /etc/wpa_supplicant/`)
+  * Enter you internetenabled WiFi `sudo nano internet`
+  * Copy to the wpa_supplicant directory (`sudo cp gopro /etc/wpa_supplicant/`)
+  * Give executing rights to switchwifi script (`chmod +x switchwifi`)
 * Install dependencies
   * `sudo apt-get update`
   * `sudo apt-get upgrade`
