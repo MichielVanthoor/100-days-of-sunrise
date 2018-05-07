@@ -20,6 +20,5 @@
   * Install [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)(`pip install beautifulsoup4`)
   * [Install gcloud following these steps](https://cloud.google.com/sdk/docs/quickstart-linux)
   * Install and configure [Google Cloud Platform Client Library](https://cloud.google.com/compute/docs/tutorials/python-guide) (`pip install --upgrade google-api-python-client`)
-  * 
 * Clone this repo to your Raspberry Pi (`git clone https://github.com/MichielVanthoor/100-days-of-sunrise`)
 * Run the ingestion application (`python 100-days-of-sunrise/ingestion/ingestion.py`)
