@@ -7,12 +7,7 @@
 * Set the timezone to UTC
   * `sudo dpkg-reconfigure tzdata`
   * Select 'None of the above' and after that 'UTC'
-* Insert your network parameters Wifi config files
-  * Enter your gopro wifi password`sudo nano gopro`
-  * Copy to the wpa_supplicant directory (`sudo cp gopro /etc/wpa_supplicant/`)
-  * Enter you internetenabled WiFi `sudo nano internet`
-  * Copy to the wpa_supplicant directory (`sudo cp internet /etc/wpa_supplicant/`)
-  * Give executing rights to switchwifi script (`chmod +x switchwifi`)
+* Install connmanctl and configure your internet-enabled and Gopro network
 * Install dependencies
   * `sudo apt-get update`
   * `sudo apt-get upgrade`
