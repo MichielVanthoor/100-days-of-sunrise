@@ -1,0 +1,6 @@
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+network={
+    ssid="goprohotspot"
+    psk="<Insert your goprohotspot password here>"
+    key_mgmt=WPA-PSK
+}

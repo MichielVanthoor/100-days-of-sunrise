@@ -5,8 +5,8 @@ import json
 from bs4 import BeautifulSoup
 from google.cloud import storage
 
-
 def switch_to_SSID(ssid):
+    #TODO
     return
 
 def start_timelapse():
@@ -28,10 +28,10 @@ def dowload_latest_file(filename):
     # Get URL of latest video
     video_server_url = 'http://10.5.5.9:8080/videos/DCIM/100GOPRO/'
     response = urllib2.urlopen(video_server_url)
-    soup = BeautifulSoup(response)
+    soup = BeautifulSoup(response, 'lxml')
 
-    # TODO
-    video_name = soup.title.string
+    # Get the name and URL of the most recent recording
+    video_name = soup.find_all('a')[-2].string
     url = video_server_url+video_name
 
     # Save file in local directory
@@ -44,7 +44,7 @@ def upload_to_gcs(filename):
     client = storage.Client()
     bucket = client.get_bucket('100-days-of-sunrise')
     blob = bucket.blob(filename)
-    blob.upload_from_filename(filename='/local/path.txt')
+    blob.upload_from_filename(filename)
 
 def create_timelapse():
     # TODO
@@ -53,7 +53,7 @@ def create_timelapse():
     time.sleep(120*60)#run for 2 hours
     stop_timelapse()
     time.sleep(5)
-    dowload_latest_file('date_sunrise.mp4')
+    dowload_latest_file('staging/date_sunrise.mp4')
     #switch_to_SSID('goprohotspot') 
     #upload_to_gcs('date_sunrise.mp4')   
 
