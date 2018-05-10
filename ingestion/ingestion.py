@@ -2,12 +2,18 @@ import urllib2
 import schedule
 import time
 import json
+import os
+
 from bs4 import BeautifulSoup
 from google.cloud import storage
 
 def switch_to_SSID(ssid):
-    #TODO
-    return
+    if ssid = 'C&M':
+        os.system('')
+    elif ssid = 'goprohotspot':
+        os.system('')
+    else:
+        print('WiFi network not configured')
 
 def start_timelapse():
     # Go to time lapse mode
