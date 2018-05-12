@@ -95,8 +95,8 @@ def schedule_start_times():
     sr_start_time = get_sunrise_start_time(today)
     ss_start_time = get_sunset_start_time(today)
 
-    schedule.every().day.at(sr_start_time).do(create_timelapse,today)
-    schedule.every().day.at(ss_start_time).do(create_timelapse,today)
+    schedule.every().day.at(sr_start_time).do(create_timelapse,today+'_sr')
+    schedule.every().day.at(ss_start_time).do(create_timelapse,today+'_ss')
     print('Sunrise start set for {}'.format(sr_start_time))
     print('Sunset start set for {}'.format(ss_start_time))
 
@@ -108,4 +108,5 @@ if __name__ == "__main__":
         time.sleep(1)
 
 
-
+#TODO:
+# Delete local gopro file functionality
