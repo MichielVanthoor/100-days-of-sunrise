@@ -45,11 +45,14 @@ def upload_to_gcs(filename):
 
 def create_timelapse(filename):
     start_timelapse()
+    print('Recording started')
     time.sleep(2*60*60)
     stop_timelapse()
+    print('Recording finished')
     time.sleep(5)
-    dowload_latest_file('staging/{}_sunrise.mp4'.format(filename))
-    upload_to_gcs('{}_sunrise.mp4'.format(filename))
+    dowload_latest_file('staging/{}.mp4'.format(filename))
+    upload_to_gcs('{}.mp4'.format(filename))
+    print('Upload to GCS is complete')
 
 def get_sun_details(day):
     sun_api = 'https://api.sunrise-sunset.org/json?lat=52.377956&lng=4.897070&date={}'.format(day)
@@ -102,6 +105,7 @@ def schedule_start_times():
 
 if __name__ == "__main__":
     # Schedule and run job
+    print('Your application is runnig, time to sit back and relax!')
     schedule.every(1).day.at("00:05").do(schedule_start_times)
     while True:
         schedule.run_pending()
