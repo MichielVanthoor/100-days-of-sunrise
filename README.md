@@ -1,7 +1,10 @@
 # 100-days-of-sunrise
 
-## Concept
+Work in progress
 
+## Concept
+GoPro will automatically create a timelapse every morning based on the time of sunrise.
+These timelapses will be stored in Google Cloud Storage, and can than be used for display on websites etc.
 
 ## Requirements
 * GoPro Hero 4
