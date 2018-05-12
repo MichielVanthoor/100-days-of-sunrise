@@ -28,6 +28,6 @@ These timelapses will be stored in Google Cloud Storage, and can than be used fo
   * [Install gcloud following these steps](https://cloud.google.com/sdk/docs/quickstart-linux)
   * Install and configure [Google Cloud Platform Client Library](https://cloud.google.com/compute/docs/tutorials/python-guide) (`pip install --upgrade google-api-python-client`)
 * Clone this repo to your Raspberry Pi (`git clone https://github.com/MichielVanthoor/100-days-of-sunrise`)
-* Run the ingestion application
+* Run the ingestion application (optionally run tmux from ssh session)
   * `cd 100-days-of-sunrise/ingestion`
   * `python ingestion.py`
