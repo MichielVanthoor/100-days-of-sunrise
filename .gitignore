@@ -1,5 +1,17 @@
 # GCP Service Account Credentials #
 100-days-of-sunrise-438382650537.json
 
-# JPG files #
+# Media files #
 *.JPG
+*.MP4
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.pyc
