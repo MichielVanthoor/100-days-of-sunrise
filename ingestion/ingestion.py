@@ -3,18 +3,9 @@ import schedule
 import time
 import datetime
 import json
-import os
 
 from bs4 import BeautifulSoup
 from google.cloud import storage
-
-def switch_to_SSID(ssid):
-    if ssid in ['C&M']:
-        os.system('connmanctl connect wifi_b827eb4107d1_43264d_managed_psk')
-    elif ssid in ['goprohotspot']:
-        os.system('connmanctl connect wifi_b827eb4107d1_676f70726f686f7473706f74_managed_psk')
-    else:
-        print('WiFi network not configured')
 
 def start_timelapse():
     # Go to time lapse mode
@@ -53,45 +44,66 @@ def upload_to_gcs(filename):
     blob.upload_from_filename('staging/{}'.format(filename))
 
 def create_timelapse(filename):
-    switch_to_SSID('goprohotspot')
-    time.sleep(10)
     start_timelapse()
-    time.sleep(10)#TODO
+    time.sleep(2*60*60)
     stop_timelapse()
     time.sleep(5)
     dowload_latest_file('staging/{}_sunrise.mp4'.format(filename))
-    switch_to_SSID('C&M')
-    time.sleep(10)
     upload_to_gcs('{}_sunrise.mp4'.format(filename))
 
-def schedule_start_time():
-    print('Starting time is being scheduled')
+def get_sun_details(day):
+    sun_api = 'https://api.sunrise-sunset.org/json?lat=52.377956&lng=4.897070&date={}'.format(day)
+    response = urllib2.urlopen(sun_api)
+    sun_details = json.load(response)['results']
+
+    return sun_details
+
+def get_sunrise_start_time(day):
+    # Get sunrise
+    sun_details = get_sun_details(day)
+    sr_time_string = sun_details['sunrise']
+
+    # Convert to time format to do math
+    sr_time = datetime.datetime.strptime(sr_time_string, '%I:%M:%S %p')
+
+    # Calculate start time & convert to string
+    sr_start_time = sr_time - datetime.timedelta(minutes=15)
+    sr_start_time_string = datetime.datetime.strftime(sr_start_time, '%H:%M')
+
+    return sr_start_time_string
+
+def get_sunset_start_time(day):
+    # Get sunset
+    sun_details = get_sun_details(day)
+    ss_time_string = sun_details['sunset']
+
+    # Convert to time format to do math
+    ss_time = datetime.datetime.strptime(ss_time_string, '%I:%M:%S %p')
+
+    # Calculate start time & convert to string
+    ss_start_time = ss_time - datetime.timedelta(minutes=105)
+    ss_start_time_string = datetime.datetime.strftime(ss_start_time, '%H:%M')
+
+    return ss_start_time_string
+
+def schedule_start_times():
     # Get today's date
     today = datetime.datetime.now().strftime('%Y-%m-%d')
+    print('Starting times are being scheduled for {}'.format(today))
 
-    # Get sunrise through API
-    sunrise_api = 'https://api.sunrise-sunset.org/json?lat=52.377956&lng=4.897070&date={}'.format(today)
-    response = urllib2.urlopen(sunrise_api)
-    data = json.load(response) 
-    sunrise_time_string = data['results']['sunrise']
-    
-    # Convert to time format to do math
-    sunrise_time = time.strptime(sunrise_time_string, '%I:%M:%S %p') 
+    # Get sunrise and sunset starttimes
+    sr_start_time = get_sunrise_start_time(today)
+    ss_start_time = get_sunset_start_time(today)
 
-    #TODO
-    # Calculate start time & convert to string
-    offset_minutes = 15
-    #start_time = sunrise_time - offset_minutes*60
-    #start_time_string = time.strftime(start_time, '%I:%M')
-    start_time_string = '09:37'
-
-    schedule.every().day.at(start_time_string).do(create_timelapse(today))
+    schedule.every().day.at(sr_start_time).do(create_timelapse,today)
+    schedule.every().day.at(ss_start_time).do(create_timelapse,today)
+    print('Sunrise start set for {}'.format(sr_start_time))
+    print('Sunset start set for {}'.format(ss_start_time))
 
 if __name__ == "__main__":
     # Schedule and run job
-    #TODO
-    schedule.every(1).day.at("09:35").do(schedule_start_time)
-    while 1:
+    schedule.every(1).day.at("00:05").do(schedule_start_times)
+    while True:
         schedule.run_pending()
         time.sleep(1)
 
