@@ -21,7 +21,7 @@ def stop_timelapse():
     # Stop the time lapse recording
     urllib2.urlopen('http://10.5.5.9/gp/gpControl/command/shutter?p=0')
 
-def dowload_latest_file(filename):
+def get_latest_file():
     # Get URL of latest video
     video_server_url = 'http://10.5.5.9:8080/videos/DCIM/100GOPRO/'
     response = urllib2.urlopen(video_server_url)
@@ -29,6 +29,13 @@ def dowload_latest_file(filename):
 
     # Get the name and URL of the most recent recording
     video_name = soup.find_all('a')[-2].string
+
+    return video_name
+
+def download_latest_video(filename):
+    # Get URL of latest video
+    video_name = get_latest_file()
+    video_server_url = 'http://10.5.5.9:8080/videos/DCIM/100GOPRO/'
     url = video_server_url+video_name
 
     # Save file in local directory
@@ -37,6 +44,10 @@ def dowload_latest_file(filename):
     with open(filename, "w+") as code:
       code.write(data)
 
+def delete_latest_file():
+    # Delete Last media taken
+    urllib2.urlopen('http://10.5.5.9/gp/gpControl/command/storage/delete/last')
+
 def upload_to_gcs(filename):
     client = storage.Client()
     bucket = client.get_bucket('100-days-of-sunrise')
@@ -44,15 +55,23 @@ def upload_to_gcs(filename):
     blob.upload_from_filename('staging/{}'.format(filename))
 
 def create_timelapse(filename):
+    # Create the timelapse on GoPro for 2 hours
     start_timelapse()
     print('Recording started')
     time.sleep(2*60*60)
     stop_timelapse()
     print('Recording finished')
+
+    # Download the timelapse locally and upload to GCS
     time.sleep(5)
-    dowload_latest_file('staging/{}.mp4'.format(filename))
+    download_latest_video('staging/{}.mp4'.format(filename))
     upload_to_gcs('{}.mp4'.format(filename))
     print('Upload to GCS is complete')
+
+    # Delete file locally
+    delete_latest_file()
+    print('Local file deleted')
+
 
 def get_sun_details(day):
     sun_api = 'https://api.sunrise-sunset.org/json?lat=52.377956&lng=4.897070&date={}'.format(day)
@@ -105,12 +124,8 @@ def schedule_start_times():
 
 if __name__ == "__main__":
     # Schedule and run job
-    print('Your application is runnig, time to sit back and relax!')
+    print('Your application is running, time to sit back and relax!')
     schedule.every(1).day.at("00:05").do(schedule_start_times)
     while True:
         schedule.run_pending()
         time.sleep(1)
-
-
-#TODO:
-# Delete local gopro file functionality
